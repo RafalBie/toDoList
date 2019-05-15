@@ -1,21 +1,42 @@
-var initialData = [
-    {
-        id: 1,
-        title: 'kup jajka',
-        color: 'green'
-    }, {
-        id: 2,
-        title: 'zadzwon do klienta',
-        color: 'blue'
-    },
-];
-var nextId = 3;
+// var initialData = [
+//     {
+//         id: 1,
+//         title: 'kup jajka',
+//         color: 'green'
+//     }, {
+//         id: 2,
+//         title: 'zadzwon do klienta',
+//         color: 'blue'
+//     },
+// ];
+// var nextId = 3;
 var $list, $addTaskInput, $addTaskColor;
-
+const BASE_URL = 'http://195.181.210.249:3000/todo/';
 function main() {
     prepareDOMElements();
     prepareDOMEvents();
     prepareInitialList(initialData);
+}
+function getTodos() {
+    /**
+     * Przy pomocy axiosa, czyli klienta opartego na promisach do komunikacji z serwerami,
+     * pobieramy uywając metody get wszystkie elementy z urla BASE_URL
+     * funkcja axios.get zwraca nam Promise z odpowiedzią z serwera
+     */
+    axios.get(BASE_URL)
+        /**
+         * Przy uyciu konsumera then oczekujemy na odpowiedź i wykonaniu promisy utworzonej w funkcji axios.get
+         * Następnie dla danych zawartych wewnątrz odpowiedzi wywołujemy funkcję prepareInitialList
+         */
+        .then(res => {
+            prepareInitialList(res.data);
+        })
+        /**
+         * W przypadku potencjalnego błędu po stronie serwera wyłapujemy go i wyświetlamy informacje do konsoli
+         */
+        .catch(err => {
+            console.log('zlapalem blad w promisie');
+        });
 }
 
 function prepareInitialList(elements) {
@@ -36,10 +57,25 @@ function prepareDOMEvents() {
     $list.addEventListener('click', listClickHandler);
 }
 
-function addButtonHandler() {
-    addElementToList($list, $addTaskInput.value, $addTaskColor.value, nextId);
-    nextId ++;
+function addButtonHandler() {/**
+    * przy pomocy axiosa wysylamy call "POST" z danymi nowego todosa
+    */
+   axios.post(BASE_URL, {
+       /**
+        * Wysylamy title i extra, wartosci naszego inputu z tytulem todosa oraz input z kolorem nowego todosa w polu extra
+        */
+       title: $addTaskInput.value,
+       extra: $addTaskColor.value,
+   }).then(() => {
+       /**
+        * Po udanej wysylce, jezeli promise zwrocony z funkcji axios.post zakonczyl sie sukcesem czyscimy cala liste i od nowa
+        * pobieramy wszystkie todosy z serwera (dzieki temu pobieramy rowniez juz ten nowy utworzony todos)
+        */
+       $list.innerHTML = '';
+       getTodos();
+   })
 }
+   
 
 function listClickHandler(event) {
     if(event.target.tagName != "BUTTON") {
@@ -50,6 +86,16 @@ function listClickHandler(event) {
 }
 
 function deleteElement(elementId) {
+      /**
+     * za pomoca axiosa wysylamy informacje o usunieciu danego elementu robimy to poprzez utworzenie urla zlozonego z urla podstawowego
+     * bedace nasz zmienna globalna oraz idka elementu do usuniecia np. wysylka axios.delete pod adres:
+     * 'http://195.181.210.249:3000/todo/93' usunie z serwera element o id 93
+     */
+    axios.delete(BASE_URL + elementId);
+    /**
+     * usuwamy rowniez dany element z naszej strony, znajdujemy go za pomoca jego Idka i wywolujemy funkcje remove, 
+     * ktora usunie go z drzewa DOM
+     */
     document.getElementById(elementId).remove();
 }
 
@@ -68,7 +114,7 @@ function createListElement(title, color, id) {
     deleteButton.textContent = 'delete';
     deleteButton.dataset.taskId = id;
     newListElement.appendChild(deleteButton);
-    
+
     var editButton = document.createElement('button');
     editButton.textContent = 'edit';
     editButton.dataset.taskId = id;
