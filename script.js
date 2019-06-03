@@ -1,21 +1,10 @@
-// var initialData = [
-//     {
-//         id: 1,
-//         title: 'kup jajka',
-//         color: 'green'
-//     }, {
-//         id: 2,
-//         title: 'zadzwon do klienta',
-//         color: 'blue'
-//     },
-// ];
-// var nextId = 3;
+
 var $list, $addTaskInput, $addTaskColor;
 const BASE_URL = 'http://195.181.210.249:3000/todo/';
 function main() {
     prepareDOMElements();
     prepareDOMEvents();
-    prepareInitialList(initialData);
+   getTodos();
 }
 function getTodos() {
     /**
@@ -81,9 +70,13 @@ function listClickHandler(event) {
     if(event.target.tagName != "BUTTON") {
         return;
     }
-
+// sprawdz jaki przycisk zstal klikniety kolejny if
     deleteElement(event.target.dataset.taskId);
+}  
+     if(event == "BUTTON") {
+    editEL(event);
 }
+   
 
 function deleteElement(elementId) {
       /**
@@ -122,6 +115,11 @@ function createListElement(title, color, id) {
 
     return newListElement;
 }
+function editEL(elementId){ 
+    // popup otwieram popup pozwalam na zmiane i save 
+    axios.edit(BASE_URL + elementId);
+    document.getElementById(elementId).edit();
 
+}
 
 document.addEventListener('DOMContentLoaded', main);
