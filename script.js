@@ -70,12 +70,15 @@ function listClickHandler(event) {
     if(event.target.tagName != "BUTTON") {
         return;
     }
-// sprawdz jaki przycisk zstal klikniety kolejny if
+// // sprawdz jaki przycisk zstal klikniety kolejny if
+
+    if(event.target.className === "edit") {
+    editEL(event.target.dataset.taskId)
+    } else if (event.target.className === "delete") {
     deleteElement(event.target.dataset.taskId);
-}  
-     if(event == "BUTTON") {
-    editEL(event);
-}
+    }
+
+
    
 
 function deleteElement(elementId) {
@@ -105,11 +108,13 @@ function createListElement(title, color, id) {
 
     var deleteButton = document.createElement('button');
     deleteButton.textContent = 'delete';
+    deleteButton.style.className = 'delete';
     deleteButton.dataset.taskId = id;
     newListElement.appendChild(deleteButton);
 
     var editButton = document.createElement('button');
     editButton.textContent = 'edit';
+    editButton.style.className = 'edit';
     editButton.dataset.taskId = id;
     newListElement.appendChild(editButton);
 
@@ -119,6 +124,7 @@ function editEL(elementId){
     // popup otwieram popup pozwalam na zmiane i save 
     axios.edit(BASE_URL + elementId);
     document.getElementById(elementId).edit();
+    
 
 }
 
