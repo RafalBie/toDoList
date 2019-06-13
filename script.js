@@ -77,7 +77,7 @@ function listClickHandler(event) {
     } else if (event.target.className === "delete") {
     deleteElement(event.target.dataset.taskId);
     }
-
+}
 
    
 
@@ -108,13 +108,13 @@ function createListElement(title, color, id) {
 
     var deleteButton = document.createElement('button');
     deleteButton.textContent = 'delete';
-    deleteButton.style.className = 'delete';
+    deleteButton.classList.add('delete');
     deleteButton.dataset.taskId = id;
     newListElement.appendChild(deleteButton);
 
     var editButton = document.createElement('button');
     editButton.textContent = 'edit';
-    editButton.style.className = 'edit';
+    editButton.classList.add('edit');
     editButton.dataset.taskId = id;
     newListElement.appendChild(editButton);
 
@@ -122,8 +122,8 @@ function createListElement(title, color, id) {
 }
 function editEL(elementId){ 
     // popup otwieram popup pozwalam na zmiane i save 
-    axios.edit(BASE_URL + elementId);
-    document.getElementById(elementId).edit();
+    // axios.edit(BASE_URL + elementId);
+    // document.getElementById(elementId).edit();
     
 
 }

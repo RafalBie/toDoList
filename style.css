@@ -5,3 +5,9 @@
 .alternativeTask {
     color: green;
 }
+.delete {
+    coler: red;
+}
+.edit {
+    coler: green;
+}
