@@ -124,8 +124,10 @@ function editEL(elementId){
     // popup otwieram popup pozwalam na zmiane i save 
     // axios.edit(BASE_URL + elementId);
     // document.getElementById(elementId).edit();
+    axios.put(BASE_URL + elementId, {title: 'nowy tytul'});
+    document.getElementById('popup').style.display = 'block';
+    // document.getElementById(elementId).getElementByTagName('span').innerText = 'tutaj przekaz zmieniony tekst';
     
-
 }
 
 document.addEventListener('DOMContentLoaded', main);
