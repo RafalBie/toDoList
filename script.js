@@ -126,10 +126,9 @@ function editEL(elementId){
     // document.getElementById(elementId).edit();
     axios.put(BASE_URL + elementId, {title: 'nowy tytul'});
     document.getElementById('popup').style.display = 'block';
-    // document.getElementById(elementId).getElementByTagName('span').innerText = 'tutaj przekaz zmieniony tekst';
-//    
-    var newWindow = window.open("", null, "height=200,width=400");  
-    newWindow.innerText = 'tutaj przekaz zmieniony tekst';
+    function closeForm() {
+        document.getElementById("myForm").style.display = "none";
+      }
     
 
     

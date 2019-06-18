@@ -10,7 +10,13 @@
         <button id="add">Add</button>
 
         <ul class="task" id="task-list"></ul>
-        <div id='popup' style="display:none"></div>
+        <div id='popup' style="display:none">
+            <form action="/action_page.php" class="form-container">
+                <input type="text" placeholder="" name="" required>
+                <button type="submit" class="btn">submit</button>
+                <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+              </form>
+        </div>
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <script src="script.js"></script>   
 
