@@ -101,10 +101,16 @@ function addElementToList($listWhereAdd, title, color, id) {
 }
 
 function createListElement(title, color, id) {
+ 
     var newListElement = document.createElement('li');
-    newListElement.textContent = title;
+    // newListElement.textContent= title;
     newListElement.style.color = color;
     newListElement.id = id;
+    var newspanelement = document.createElement('span')
+    newspanelement.textContent = title;
+    newListElement.appendChild(newspanelement)
+   
+   
 
     var deleteButton = document.createElement('button');
     deleteButton.textContent = 'delete';
@@ -126,6 +132,9 @@ function editEL(elementId){
     // document.getElementById(elementId).edit();
     axios.put(BASE_URL + elementId, {title: 'nowy tytul'});
     document.getElementById('popup').style.display = 'block';
+    var textConteiner = document.getElementById ('intext').innerText;
+    document.getElementById('span').innerText = textConteiner;
+
     function closeForm() {
         document.getElementById("myForm").style.display = "none";
       }
