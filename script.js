@@ -132,8 +132,10 @@ function editEL(elementId){
     // document.getElementById(elementId).edit();
     axios.put(BASE_URL + elementId, {title: 'nowy tytul'});
     document.getElementById('popup').style.display = 'block';
-    var textConteiner = document.getElementById ('intext').innerText;
-    document.getElementById('span').innerText = textConteiner;
+    var textConteiner = document.querySelector('#task-list' + elementId + ' span');
+    var content = document.getElementById('popup');
+    textConteiner.innerHTML = content; 
+    // document.getElementById('span').innerText = textConteiner;
 
     function closeForm() {
         document.getElementById("myForm").style.display = "none";
