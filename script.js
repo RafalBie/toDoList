@@ -127,18 +127,15 @@ function createListElement(title, color, id) {
     return newListElement;
 }
 function editEL(elementId){ 
-    // popup otwieram popup pozwalam na zmiane i save 
-    // axios.edit(BASE_URL + elementId);
-    // document.getElementById(elementId).edit();
     axios.put(BASE_URL + elementId, {title: 'nowy tytul'});
     document.getElementById('popup').style.display = 'block';
-    var textConteiner = document.querySelector('#task-list' + elementId + ' span');
-    var content = document.getElementById('popup');
-    textConteiner.innerHTML = content; 
-    // document.getElementById('span').innerText = textConteiner;
+    var content = document.querySelector('#' + elementId + 'span');
+    content.newListElement.id = id;
+    var textConteiner = document.getElementById('popup');
+    content.innerHTML = textConteiner;
 
     function closeForm() {
-        document.getElementById("myForm").style.display = "none";
+        document.getElementById("popup").style.display = "none";
       }
     
 
