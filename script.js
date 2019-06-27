@@ -130,9 +130,19 @@ function editEL(elementId){
     axios.put(BASE_URL + elementId, {title: 'nowy tytul'});
     document.getElementById('popup').style.display = 'block';
     var content = document.querySelector('#todo-' + elementId + ' span');
-    var inputText = document.getElementById('intext').value;
-    content.innerHTML = inputText;
-    debugger;
+    var newvalue = content.innerText;
+    document.getElementById('intext').value = newvalue;
+    
+    
+    function sub() {
+        var submitButton = document.getElementById("mySubmit").value;
+        newvalue.appendChild(axios.put);
+    
+        
+    }
+
+   
+  
    
 
 
