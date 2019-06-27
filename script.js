@@ -105,7 +105,7 @@ function createListElement(title, color, id) {
     var newListElement = document.createElement('li');
     // newListElement.textContent= title;
     newListElement.style.color = color;
-    newListElement.id = id;
+    newListElement.id = 'todo-' + id;
     var newspanelement = document.createElement('span')
     newspanelement.textContent = title;
     newListElement.appendChild(newspanelement)
@@ -129,17 +129,24 @@ function createListElement(title, color, id) {
 function editEL(elementId){ 
     axios.put(BASE_URL + elementId, {title: 'nowy tytul'});
     document.getElementById('popup').style.display = 'block';
-    var content = document.querySelector('#' + elementId + 'span');
-    content.newListElement.id = id;
-    var textConteiner = document.getElementById('popup');
-    content.innerHTML = textConteiner;
+    var content = document.querySelector('#todo-' + elementId + ' span');
+    var inputText = document.getElementById('intext').value;
+    content.innerHTML = inputText;
+    debugger;
+   
 
-    function closeForm() {
-        document.getElementById("popup").style.display = "none";
-      }
-    
 
     
+    // textConteiner.innerText = content
+    
+    // 1 znalesc input query sesector getelementbyId
+    //2 wrzucic text do inputa
+    // submit to pomienic podmienia 
+
+  
 }
+    function closeForm() {
+    document.getElementById("popup").style.display = "none";
+  }
 
 document.addEventListener('DOMContentLoaded', main);
