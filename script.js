@@ -1,10 +1,11 @@
 
 var $list, $addTaskInput, $addTaskColor;
+var currentlyEditedId;
 const BASE_URL = 'http://195.181.210.249:3000/todo/';
 function main() {
     prepareDOMElements();
     prepareDOMEvents();
-   getTodos();
+    getTodos();
 }
 function getTodos() {
     /**
@@ -44,6 +45,8 @@ function prepareDOMEvents() {
     var addButton = document.getElementById('add');
     addButton.addEventListener('click', addButtonHandler);
     $list.addEventListener('click', listClickHandler);
+    var submitButton = document.getElementById('mySubmit');
+    submitButton.addEventListener('click',sub);
 }
 
 function addButtonHandler() {/**
@@ -132,28 +135,20 @@ function editEL(elementId){
     var content = document.querySelector('#todo-' + elementId + ' span');
     var newvalue = content.innerText;
     document.getElementById('intext').value = newvalue;
-    
-    
-    function sub() {
-        var submitButton = document.getElementById("mySubmit").value;
-        newvalue.appendChild(axios.put);
-    
-        
-    }
+    currentlyEditedId = elementId;
 
+}
    
   
-   
-
+function sub() {
 
     
-    // textConteiner.innerText = content
-    
-    // 1 znalesc input query sesector getelementbyId
-    //2 wrzucic text do inputa
-    // submit to pomienic podmienia 
+    var inputValue = document.getElementById('intext').value;
 
-  
+    axios.put(BASE_URL + elementId, {title:inputValue});
+    
+    debugger;
+    
 }
     function closeForm() {
     document.getElementById("popup").style.display = "none";
