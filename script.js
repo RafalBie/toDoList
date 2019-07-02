@@ -73,8 +73,6 @@ function listClickHandler(event) {
     if(event.target.tagName != "BUTTON") {
         return;
     }
-// // sprawdz jaki przycisk zstal klikniety kolejny if
-
     if(event.target.className === "edit") {
     editEL(event.target.dataset.taskId)
     } else if (event.target.className === "delete") {
@@ -96,6 +94,7 @@ function deleteElement(elementId) {
      * ktora usunie go z drzewa DOM
      */
     document.getElementById(elementId).remove();
+   
 }
 
 function addElementToList($listWhereAdd, title, color, id) {
@@ -106,7 +105,6 @@ function addElementToList($listWhereAdd, title, color, id) {
 function createListElement(title, color, id) {
  
     var newListElement = document.createElement('li');
-    // newListElement.textContent= title;
     newListElement.style.color = color;
     newListElement.id = 'todo-' + id;
     var newspanelement = document.createElement('span')
@@ -118,7 +116,7 @@ function createListElement(title, color, id) {
     var deleteButton = document.createElement('button');
     deleteButton.textContent = 'delete';
     deleteButton.classList.add('delete');
-    deleteButton.dataset.taskId = id;
+    deleteButton.dataset.taskId = 'todo-' + id;
     newListElement.appendChild(deleteButton);
 
     var editButton = document.createElement('button');
@@ -142,14 +140,17 @@ function editEL(elementId){
   
 function sub() {
 
-    
     var inputValue = document.getElementById('intext').value;
 
-    axios.put(BASE_URL + elementId, {title:inputValue});
-    
-    debugger;
+    axios.put(BASE_URL + currentlyEditedId, {title:inputValue}).then(() => {
+        $list.innerHTML = '';
+        getTodos();
+    });
+
+    closeForm();
     
 }
+
     function closeForm() {
     document.getElementById("popup").style.display = "none";
   }
